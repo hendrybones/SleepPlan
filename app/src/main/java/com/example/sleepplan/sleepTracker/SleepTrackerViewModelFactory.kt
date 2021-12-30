@@ -16,7 +16,6 @@ class SleepTrackerViewModelFactory(
         }
         throw IllegalArgumentException("unknown model class")
 
-
     }
 
 
