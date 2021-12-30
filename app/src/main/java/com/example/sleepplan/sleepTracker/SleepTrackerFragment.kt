@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModelProviders
 import com.example.sleepplan.R
+import com.example.sleepplan.database.SleepDatabase
 import com.example.sleepplan.databinding.FragmentSleepTrackerBinding
+import kotlinx.coroutines.InternalCoroutinesApi
 
 
 class SleepTrackerFragment : Fragment() {
@@ -19,6 +22,7 @@ class SleepTrackerFragment : Fragment() {
 
     }
 
+    @InternalCoroutinesApi
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,6 +30,14 @@ class SleepTrackerFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding =DataBindingUtil.inflate<FragmentSleepTrackerBinding>(inflater,R.layout.fragment_sleep_tracker,container,false)
 
+        val application = requireNotNull(this.activity).application
+        val dataSource=SleepDatabase.getInstance(application).sleepDatabaseDao
+        val viewModelFactory=SleepTrackerViewModelFactory(dataSource,application)
+        val sleepTrackerViewModel=
+            ViewModelProviders.of(this,viewModelFactory).get(SleepTrackerViewModel::class.java)
+
+        binding.setLifecycleOwner(this)
+        binding.sleepTrackerViewModel=sleepTrackerViewModel
         return binding.root
     }
 
