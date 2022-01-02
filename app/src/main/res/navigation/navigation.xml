@@ -16,5 +16,9 @@
     <fragment
         android:id="@+id/sleepQualityFragment"
         android:name="com.example.sleepplan.sleepQuality.SleepQualityFragment"
-        android:label="SleepQualityFragment" />
+        android:label="SleepQualityFragment" >
+        <action
+            android:id="@+id/action_sleepQualityFragment_to_sleepTrackerFragment"
+            app:destination="@id/sleepTrackerFragment" />
+    </fragment>
 </navigation>
